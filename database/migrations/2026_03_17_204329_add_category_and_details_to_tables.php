@@ -21,10 +21,6 @@ return new class extends Migration
             $table->string('category')->default('U19'); // U11, U13, U15, U17, U19
         });
 
-        Schema::table('statistics', function (Blueprint $table) {
-            $table->foreignId('player_id')->nullable()->constrained('players')->nullOnDelete();
-        });
-
         Schema::create('players', function (Blueprint $table) {
             $table->id();
             $table->foreignId('club_id')->constrained('clubs')->cascadeOnDelete();
@@ -32,6 +28,10 @@ return new class extends Migration
             $table->integer('number')->nullable();
             $table->string('position')->nullable(); // Base, Escolta, Alero, Ala-Pívot, Pívot
             $table->timestamps();
+        });
+
+        Schema::table('statistics', function (Blueprint $table) {
+            $table->foreignId('player_id')->nullable()->constrained('players')->nullOnDelete();
         });
     }
 

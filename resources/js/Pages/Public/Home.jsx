@@ -57,10 +57,10 @@ export default function Home({ auth, clubs, upcomingGames, recentGames, playoffG
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
-                        {auth.user ? (
-                            <Link href={route('dashboard')} className="px-4 sm:px-6 py-2 sm:py-2.5 bg-slate-900 text-white rounded-xl text-xs sm:text-sm font-bold hover:shadow-xl hover:shadow-slate-900/20 transition-all active:scale-95">PANEL CONTROL</Link>
-                        ) : (
-                            <Link href={route('login')} className="px-4 sm:px-6 py-2 sm:py-2.5 bg-orange-600 text-white rounded-xl text-xs sm:text-sm font-bold hover:shadow-xl hover:shadow-orange-600/20 transition-all active:scale-95 whitespace-nowrap">ACCESO DELEGADO</Link>
+                        {auth.user && (
+                            <Link href={route('dashboard')} className="px-4 sm:px-6 py-2 sm:py-2.5 bg-slate-900 text-white rounded-xl text-xs sm:text-sm font-bold hover:shadow-xl hover:shadow-slate-900/20 transition-all active:scale-95">
+                                PANEL CONTROL
+                            </Link>
                         )}
                     </div>
                 </div>
@@ -362,11 +362,25 @@ export default function Home({ auth, clubs, upcomingGames, recentGames, playoffG
             </main>
 
             <footer className="bg-slate-900 py-24 text-center">
-                <div className="text-6xl font-black text-white/5 mb-12 tracking-widest italic uppercase">ABATALCA 2026</div>
-                <div className="flex justify-center gap-10">
-                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Básquetbol</span>
-                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Talca</span>
-                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Maule</span>
+                <div className="text-6xl font-black text-white/5 mb-12 tracking-widest italic uppercase">
+                    ABATALCA 2026
+                </div>
+                <div className="flex flex-col items-center gap-4">
+                    <div className="flex justify-center gap-10">
+                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Básquetbol</span>
+                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Talca</span>
+                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Maule</span>
+                    </div>
+                    {!auth.user && (
+                        <div className="mt-4">
+                            <Link
+                                href={route('login')}
+                                className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-500 hover:text-orange-400 transition-colors"
+                            >
+                                Acceso Delegados
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </footer>
         </div>

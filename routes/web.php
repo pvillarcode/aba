@@ -70,6 +70,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Game/Results Management
         Route::get('/games', [\App\Http\Controllers\Delegate\GameController::class, 'index'])->name('games.index');
+        Route::get('/games/create', [\App\Http\Controllers\Delegate\GameController::class, 'create'])->name('games.create');
+        Route::post('/games', [\App\Http\Controllers\Delegate\GameController::class, 'store'])->name('games.store');
         Route::get('/games/{game}/edit', [\App\Http\Controllers\Delegate\GameController::class, 'edit'])->name('games.edit');
         Route::put('/games/{game}', [\App\Http\Controllers\Delegate\GameController::class, 'update'])->name('games.update');
     });

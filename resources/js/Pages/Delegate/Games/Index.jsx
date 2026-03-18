@@ -13,7 +13,15 @@ export default function Index({ auth, games }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-xl sm:rounded-3xl border border-slate-200">
                         <div className="p-8">
-                            <h3 className="text-sm font-black text-slate-400 uppercase tracking-[0.3em] mb-8">Todos los encuentros de tu club</h3>
+                            <div className="flex items-center justify-between mb-8">
+                                <h3 className="text-sm font-black text-slate-400 uppercase tracking-[0.3em]">Todos los encuentros de tu club</h3>
+                                <Link
+                                    href={route('delegate.games.create')}
+                                    className="inline-flex items-center px-6 py-2 bg-slate-900 text-white rounded-2xl text-[11px] font-black uppercase tracking-[0.2em] hover:bg-orange-600 transition-colors"
+                                >
+                                    + Agendar Encuentro
+                                </Link>
+                            </div>
                             
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left border-collapse">

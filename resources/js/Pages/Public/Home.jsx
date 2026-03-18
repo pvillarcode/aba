@@ -187,8 +187,8 @@ export default function Home({ auth, clubs, upcomingGames, recentGames, playoffG
                                         </div>
                                         <div className="flex items-center gap-6 mb-4">
                                             <div className="text-center bg-white/10 px-4 py-3 rounded-2xl">
-                                                <span className="block text-3xl font-black">{new Date(game.date).getDate()}</span>
-                                                <span className="block text-[10px] uppercase font-bold text-orange-400">{new Date(game.date).toLocaleString('default', { month: 'short' })}</span>
+                                                <span className="block text-3xl font-black">{new Date(game.date.split('T')[0] + 'T12:00:00').getDate()}</span>
+                                                <span className="block text-[10px] uppercase font-bold text-orange-400">{new Date(game.date.split('T')[0] + 'T12:00:00').toLocaleString('default', { month: 'short' })}</span>
                                             </div>
                                             <div className="flex-1">
                                                 <div className="flex items-center gap-4 text-xl font-bold tracking-tight">
@@ -233,7 +233,7 @@ export default function Home({ auth, clubs, upcomingGames, recentGames, playoffG
                                     {(playoffGames[selectedCategory] || []).filter(g => g.stage === stage).map(game => (
                                         <div key={game.id} className="bg-white border text-slate-800 p-6 rounded-3xl shadow-sm hover:shadow-lg hover:border-indigo-200 transition-all group">
                                             <div className="flex items-center justify-between mb-4">
-                                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{new Date(game.date).toLocaleDateString()}</span>
+                                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{new Date(game.date.split('T')[0] + 'T12:00:00').toLocaleDateString()}</span>
                                                 <span className={`text-[10px] font-black px-3 py-1 rounded-full ${game.status === 'finished' ? 'bg-green-100 text-green-600' : 'bg-slate-100 text-slate-400'}`}>
                                                     {game.status === 'finished' ? 'FINAL' : 'PDTE'}
                                                 </span>

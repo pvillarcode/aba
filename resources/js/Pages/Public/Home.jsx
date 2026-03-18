@@ -49,7 +49,7 @@ export default function Home({ auth, clubs, upcomingGames, recentGames, playoffG
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-orange-100 selection:text-orange-900">
+        <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-orange-100 selection:text-orange-900 scroll-smooth">
             <Head title="Abatalca - Torneo de Básquetbol" />
 
             {/* Premium Navigation */}
@@ -61,9 +61,9 @@ export default function Home({ auth, clubs, upcomingGames, recentGames, playoffG
                             ABATALCA
                         </Link>
                         <div className="hidden md:flex gap-8">
-                            <Link href="/" className="text-sm font-bold uppercase tracking-widest text-orange-600 border-b-2 border-orange-600 pb-1">Resultados</Link>
-                            <Link href="/" className="text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-slate-600 transition-colors pb-1">Clubes</Link>
-                            <Link href="/" className="text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-slate-600 transition-colors pb-1">Posiciones</Link>
+                            <a href="#resultados" className="text-sm font-bold uppercase tracking-widest text-orange-600 border-b-2 border-orange-600 pb-1">Resultados</a>
+                            <a href="#clubes" className="text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-slate-600 transition-colors pb-1">Clubes</a>
+                            <a href="#posiciones" className="text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-slate-600 transition-colors pb-1">Posiciones</a>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
@@ -137,7 +137,7 @@ export default function Home({ auth, clubs, upcomingGames, recentGames, playoffG
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
                     
                     {/* Recent Results Section */}
-                    <div className="space-y-10">
+                    <div id="resultados" className="space-y-10 scroll-mt-28">
                         <h2 className="text-4xl font-black text-slate-900 flex items-center gap-4">
                             <span className="w-2 h-10 bg-orange-600 rounded-full"></span>
                             Resultados <span className="text-orange-600">{selectedCategory}</span>
@@ -288,7 +288,7 @@ export default function Home({ auth, clubs, upcomingGames, recentGames, playoffG
                 )}
 
                 {/* Standings Table Section */}
-                <div className="mt-40">
+                <div id="posiciones" className="mt-40 scroll-mt-28">
                     <h2 className="text-4xl font-black text-slate-900 mb-10 flex items-center gap-4">
                         <span className="w-2 h-10 bg-green-500 rounded-full"></span>
                         Tabla de Posiciones <span className="text-green-600">{currentGender} {selectedCategory}</span>
@@ -350,7 +350,7 @@ export default function Home({ auth, clubs, upcomingGames, recentGames, playoffG
                 </div>
 
                 {/* Clubs Gallery */}
-                <div className="mt-40">
+                <div id="clubes" className="mt-40 scroll-mt-28">
                     <h2 className="text-center text-4xl font-black mb-16 italic tracking-tighter uppercase text-slate-900 underline decoration-orange-600 decoration-8 underline-offset-8">Clubes Participantes</h2>
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
                         {clubs.map(club => (

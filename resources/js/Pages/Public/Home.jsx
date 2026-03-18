@@ -4,6 +4,13 @@ import { useState } from 'react';
 export default function Home({ auth, clubs, upcomingGames, recentGames, playoffGames, categories, standings, seasons, currentSeason, currentGender }) {
     const [selectedCategory, setSelectedCategory] = useState('U19');
 
+    // Mostrar sección de playoffs por categoría solo si en la categoría seleccionada
+    // hay al menos un partido de playoffs programado (scheduled)
+    const hasPlayoffGamesForSelectedCategory =
+        !!playoffGames &&
+        !!playoffGames[selectedCategory] &&
+        playoffGames[selectedCategory].some(g => g.status === 'scheduled');
+
     const handleFilterChange = (seasonId, gender) => {
         router.get(route('home'), { 
             season: seasonId || currentSeason?.id, 
@@ -185,16 +192,20 @@ export default function Home({ auth, clubs, upcomingGames, recentGames, playoffG
                                         <div className="absolute top-0 right-0 p-4">
                                             <div className="bg-orange-600 p-2 rounded-xl text-xs font-black tracking-widest">{selectedCategory}</div>
                                         </div>
-                                        <div className="flex items-center gap-6 mb-4">
+                                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 mb-4">
                                             <div className="text-center bg-white/10 px-4 py-3 rounded-2xl">
                                                 <span className="block text-3xl font-black">{new Date(game.date.split('T')[0] + 'T12:00:00').getDate()}</span>
                                                 <span className="block text-[10px] uppercase font-bold text-orange-400">{new Date(game.date.split('T')[0] + 'T12:00:00').toLocaleString('default', { month: 'short' })}</span>
                                             </div>
-                                            <div className="flex-1">
-                                                <div className="flex items-center gap-4 text-xl font-bold tracking-tight">
-                                                    <Link href={route('public.club.show', game.home_club_id)} className="hover:text-orange-400 transition-colors uppercase tracking-tighter">{game.home_club.name}</Link>
+                                            <div className="flex-1 w-full">
+                                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-base sm:text-xl font-bold tracking-tight">
+                                                    <Link href={route('public.club.show', game.home_club_id)} className="hover:text-orange-400 transition-colors uppercase tracking-tighter break-words">
+                                                        {game.home_club.name}
+                                                    </Link>
                                                     <span className="text-white/20">vs</span>
-                                                    <Link href={route('public.club.show', game.away_club_id)} className="hover:text-orange-400 transition-colors uppercase tracking-tighter">{game.away_club.name}</Link>
+                                                    <Link href={route('public.club.show', game.away_club_id)} className="hover:text-orange-400 transition-colors uppercase tracking-tighter break-words">
+                                                        {game.away_club.name}
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>
@@ -213,56 +224,58 @@ export default function Home({ auth, clubs, upcomingGames, recentGames, playoffG
                 </div>
 
                 {/* PLAYOFF SECTION (Fase Final) */}
-                <div className="mt-40">
-                    <h2 className="text-4xl font-black text-slate-900 mb-10 flex items-center gap-4">
-                        <span className="w-2 h-10 bg-indigo-600 rounded-full"></span>
-                        Fase Final (Playoffs) <span className="text-indigo-600 italic">Liga {currentGender}</span>
-                    </h2>
+                {hasPlayoffGamesForSelectedCategory && (
+                    <div className="mt-40">
+                        <h2 className="text-4xl font-black text-slate-900 mb-10 flex items-center gap-4">
+                            <span className="w-2 h-10 bg-indigo-600 rounded-full"></span>
+                            Fase Final (Playoffs) <span className="text-indigo-600 italic">Liga {currentGender}</span>
+                        </h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {['quarter', 'semi', 'third', 'final'].map(stage => (
-                            <div key={stage} className="space-y-6">
-                                <h3 className={`text-center py-3 rounded-2xl font-black text-xs uppercase tracking-widest border italic ${
-                                    stage === 'third' 
-                                        ? 'bg-amber-50 text-amber-600 border-amber-100' 
-                                        : 'bg-indigo-50 text-indigo-600 border-indigo-100'
-                                }`}>
-                                    {stage === 'quarter' ? 'Cuartos' : stage === 'semi' ? 'Semi-Final' : stage === 'third' ? '3er Lugar 🥉' : 'Gran Final'}
-                                </h3>
-                                <div className="space-y-4">
-                                    {(playoffGames[selectedCategory] || []).filter(g => g.stage === stage).map(game => (
-                                        <div key={game.id} className="bg-white border text-slate-800 p-6 rounded-3xl shadow-sm hover:shadow-lg hover:border-indigo-200 transition-all group">
-                                            <div className="flex items-center justify-between mb-4">
-                                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{new Date(game.date.split('T')[0] + 'T12:00:00').toLocaleDateString()}</span>
-                                                <span className={`text-[10px] font-black px-3 py-1 rounded-full ${game.status === 'finished' ? 'bg-green-100 text-green-600' : 'bg-slate-100 text-slate-400'}`}>
-                                                    {game.status === 'finished' ? 'FINAL' : 'PDTE'}
-                                                </span>
-                                            </div>
-                                            <div className="space-y-3">
-                                                <div className="flex justify-between items-center">
-                                                    <span className={`text-sm font-black uppercase tracking-tighter ${game.home_score > game.away_score ? 'text-slate-900' : 'text-slate-400'}`}>
-                                                        {game.home_club.name}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                            {['quarter', 'semi', 'third', 'final'].map(stage => (
+                                <div key={stage} className="space-y-6">
+                                    <h3 className={`text-center py-3 rounded-2xl font-black text-xs uppercase tracking-widest border italic ${
+                                        stage === 'third' 
+                                            ? 'bg-amber-50 text-amber-600 border-amber-100' 
+                                            : 'bg-indigo-50 text-indigo-600 border-indigo-100'
+                                    }`}>
+                                        {stage === 'quarter' ? 'Cuartos' : stage === 'semi' ? 'Semi-Final' : stage === 'third' ? '3er Lugar 🥉' : 'Gran Final'}
+                                    </h3>
+                                    <div className="space-y-4">
+                                        {(playoffGames[selectedCategory] || []).filter(g => g.stage === stage).map(game => (
+                                            <div key={game.id} className="bg-white border text-slate-800 p-6 rounded-3xl shadow-sm hover:shadow-lg hover:border-indigo-200 transition-all group">
+                                                <div className="flex items-center justify-between mb-4">
+                                                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{new Date(game.date.split('T')[0] + 'T12:00:00').toLocaleDateString()}</span>
+                                                    <span className={`text-[10px] font-black px-3 py-1 rounded-full ${game.status === 'finished' ? 'bg-green-100 text-green-600' : 'bg-slate-100 text-slate-400'}`}>
+                                                        {game.status === 'finished' ? 'FINAL' : 'PDTE'}
                                                     </span>
-                                                    <span className={`font-black text-lg ${game.home_score > game.away_score ? 'text-indigo-600' : 'text-slate-300'}`}>{game.home_score ?? 0}</span>
                                                 </div>
-                                                <div className="flex justify-between items-center">
-                                                    <span className={`text-sm font-black uppercase tracking-tighter ${game.away_score > game.home_score ? 'text-slate-900' : 'text-slate-400'}`}>
-                                                        {game.away_club.name}
-                                                    </span>
-                                                    <span className={`font-black text-lg ${game.away_score > game.home_score ? 'text-indigo-600' : 'text-slate-300'}`}>{game.away_score ?? 0}</span>
+                                                <div className="space-y-3">
+                                                    <div className="flex justify-between items-center">
+                                                        <span className={`text-sm font-black uppercase tracking-tighter ${game.home_score > game.away_score ? 'text-slate-900' : 'text-slate-400'}`}>
+                                                            {game.home_club.name}
+                                                        </span>
+                                                        <span className={`font-black text-lg ${game.home_score > game.away_score ? 'text-indigo-600' : 'text-slate-300'}`}>{game.home_score ?? 0}</span>
+                                                    </div>
+                                                    <div className="flex justify-between items-center">
+                                                        <span className={`text-sm font-black uppercase tracking-tighter ${game.away_score > game.home_score ? 'text-slate-900' : 'text-slate-400'}`}>
+                                                            {game.away_club.name}
+                                                        </span>
+                                                        <span className={`font-black text-lg ${game.away_score > game.home_score ? 'text-indigo-600' : 'text-slate-300'}`}>{game.away_score ?? 0}</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    ))}
-                                    {(playoffGames[selectedCategory] || []).filter(g => g.stage === stage).length === 0 && (
-                                        <div className="text-center py-6 text-slate-300 text-[10px] font-black uppercase italic tracking-widest bg-slate-50/50 rounded-2xl border border-dashed">Próximamente...</div>
-                                    )}
+                                        ))}
+                                        {(playoffGames[selectedCategory] || []).filter(g => g.stage === stage).length === 0 && (
+                                            <div className="text-center py-6 text-slate-300 text-[10px] font-black uppercase italic tracking-widest bg-slate-50/50 rounded-2xl border border-dashed">Próximamente...</div>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
 
-                </div>
+                    </div>
+                )}
 
                 {/* Standings Table Section */}
                 <div className="mt-40">

@@ -84,7 +84,6 @@ class PublicController extends Controller
             'upcomingGames' => Game::with(['homeClub', 'awayClub'])
                 ->where('gender', $selectedGender)
                 ->where('status', 'scheduled')
-                ->where('stage', 'regular')
                 ->where('season_id', $selectedSeason?->id)
                 ->orderBy('date', 'asc')
                 ->get()

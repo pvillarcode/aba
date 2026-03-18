@@ -30,7 +30,7 @@ class GameController extends Controller
             'category' => 'required|string|in:U11,U13,U15,U17,U19',
             'home_score' => 'nullable|integer|min:0',
             'away_score' => 'nullable|integer|min:0',
-            'stage' => 'required|string|in:regular,quarter,semi,final',
+            'stage' => 'required|string|in:regular,quarter,semi,third,final',
             'season_id' => 'required|exists:seasons,id'
         ]);
 
@@ -56,7 +56,7 @@ class GameController extends Controller
             'away_q3' => 'nullable|integer|min:0',
             'away_q4' => 'nullable|integer|min:0',
             'delegate_comments' => 'nullable|string',
-            'stage' => 'required|string|in:regular,quarter,semi,final',
+            'stage' => 'required|string|in:regular,quarter,semi,third,final',
             'season_id' => 'required|exists:seasons,id'
         ]);
 

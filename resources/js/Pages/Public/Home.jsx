@@ -219,11 +219,15 @@ export default function Home({ auth, clubs, upcomingGames, recentGames, playoffG
                         Fase Final (Playoffs) <span className="text-indigo-600 italic">Liga {currentGender}</span>
                     </h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {['quarter', 'semi', 'final'].map(stage => (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {['quarter', 'semi', 'third', 'final'].map(stage => (
                             <div key={stage} className="space-y-6">
-                                <h3 className="text-center py-3 bg-indigo-50 text-indigo-600 rounded-2xl font-black text-xs uppercase tracking-widest border border-indigo-100 italic">
-                                    {stage === 'quarter' ? 'Cuartos' : stage === 'semi' ? 'Semi-Final' : 'Gran Final'}
+                                <h3 className={`text-center py-3 rounded-2xl font-black text-xs uppercase tracking-widest border italic ${
+                                    stage === 'third' 
+                                        ? 'bg-amber-50 text-amber-600 border-amber-100' 
+                                        : 'bg-indigo-50 text-indigo-600 border-indigo-100'
+                                }`}>
+                                    {stage === 'quarter' ? 'Cuartos' : stage === 'semi' ? 'Semi-Final' : stage === 'third' ? '3er Lugar 🥉' : 'Gran Final'}
                                 </h3>
                                 <div className="space-y-4">
                                     {(playoffGames[selectedCategory] || []).filter(g => g.stage === stage).map(game => (
@@ -257,6 +261,7 @@ export default function Home({ auth, clubs, upcomingGames, recentGames, playoffG
                             </div>
                         ))}
                     </div>
+
                 </div>
 
                 {/* Standings Table Section */}

@@ -139,6 +139,7 @@ export default function Index({ auth, games, clubs, seasons, activeSeasonId }) {
                                                     {id: 'regular', label: 'Regular'},
                                                     {id: 'quarter', label: 'Cuartos'},
                                                     {id: 'semi', label: 'Semi'},
+                                                    {id: 'third', label: '3er Lugar'},
                                                     {id: 'final', label: 'Final'}
                                                 ].map(s => (
                                                     <button 
@@ -347,7 +348,7 @@ export default function Index({ auth, games, clubs, seasons, activeSeasonId }) {
                                             </td>
                                             <td className="px-6 py-6 text-center">
                                                 <span className={`text-[9px] font-black uppercase px-2 py-1 rounded ${game.stage === 'regular' ? 'text-slate-400' : 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20'}`}>
-                                                    {game.stage === 'regular' ? 'Regular' : game.stage === 'quarter' ? 'Cuartos' : game.stage === 'semi' ? 'Semi' : 'Final'}
+                                                    {game.stage === 'regular' ? 'Regular' : game.stage === 'quarter' ? 'Cuartos' : game.stage === 'semi' ? 'Semi' : game.stage === 'third' ? '3er Lugar' : 'Final'}
                                                 </span>
                                             </td>
                                             <td className="px-8 py-6 text-right">

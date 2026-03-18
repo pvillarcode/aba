@@ -1,6 +1,16 @@
 import { Head, Link, router } from '@inertiajs/react';
 import { useState } from 'react';
 
+// Evitar desfase horario: formatear hora usando UTC tal como viene desde el backend,
+// sin aplicar la zona horaria del navegador.
+const formatGameTime = (isoString) => {
+    if (!isoString) return '';
+    const d = new Date(isoString);
+    const hours = String(d.getUTCHours()).padStart(2, '0');
+    const minutes = String(d.getUTCMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+};
+
 export default function Home({ auth, clubs, upcomingGames, recentGames, playoffGames, categories, standings, seasons, currentSeason, currentGender }) {
     const [selectedCategory, setSelectedCategory] = useState('U19');
 
@@ -211,7 +221,7 @@ export default function Home({ auth, clubs, upcomingGames, recentGames, playoffG
                                         </div>
                                         <div className="flex items-center gap-2 text-xs font-bold text-white/40 uppercase tracking-widest">
                                             <svg className="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                            Inicia a las {new Date(game.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                            Inicia a las {formatGameTime(game.date)}
                                         </div>
                                     </div>
                                 ))

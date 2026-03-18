@@ -40,7 +40,7 @@ export default function Index({ auth, clubs }) {
                                     <p className="text-sm text-slate-500 line-clamp-2 mb-6 font-medium italic">"{club.description}"</p>
                                     <div className="flex items-center gap-2">
                                         <Link href={route('admin.clubs.edit', club.id)} className="grow text-center py-2 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all">GESTIONAR CLUB</Link>
-                                        <Link href={route('public.clubs.show', club.id)} target="_blank" className="p-2 bg-orange-50 text-orange-600 rounded-lg hover:bg-orange-600 hover:text-white transition-all"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" strokeWidth="2.5"></path></svg></Link>
+                                        <Link href={route('public.club.show', club.id)} target="_blank" className="p-2 bg-orange-50 text-orange-600 rounded-lg hover:bg-orange-600 hover:text-white transition-all"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" strokeWidth="2.5"></path></svg></Link>
                                     </div>
                                 </div>
                             </div>

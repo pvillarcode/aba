@@ -51,9 +51,9 @@ export default function Home({ auth, clubs, upcomingGames, recentGames, playoffG
                     </div>
                     <div className="flex items-center gap-4">
                         {auth.user ? (
-                            <Link href={route('dashboard')} className="px-6 py-2.5 bg-slate-900 text-white rounded-xl text-sm font-bold hover:shadow-xl hover:shadow-slate-900/20 transition-all active:scale-95">PANEL CONTROL</Link>
+                            <Link href={route('dashboard')} className="px-4 sm:px-6 py-2 sm:py-2.5 bg-slate-900 text-white rounded-xl text-xs sm:text-sm font-bold hover:shadow-xl hover:shadow-slate-900/20 transition-all active:scale-95">PANEL CONTROL</Link>
                         ) : (
-                            <Link href={route('login')} className="px-6 py-2.5 bg-orange-600 text-white rounded-xl text-sm font-bold hover:shadow-xl hover:shadow-orange-600/20 transition-all active:scale-95">ACCESO DELEGADO</Link>
+                            <Link href={route('login')} className="px-4 sm:px-6 py-2 sm:py-2.5 bg-orange-600 text-white rounded-xl text-xs sm:text-sm font-bold hover:shadow-xl hover:shadow-orange-600/20 transition-all active:scale-95 whitespace-nowrap">ACCESO DELEGADO</Link>
                         )}
                     </div>
                 </div>

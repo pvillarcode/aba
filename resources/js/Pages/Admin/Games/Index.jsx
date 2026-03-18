@@ -13,7 +13,8 @@ export default function Index({ auth, games, clubs, seasons, activeSeasonId }) {
         home_score: 0,
         away_score: 0,
         status: 'scheduled',
-        date: new Date().toISOString().split('T')[0],
+        // Fecha y hora (para controlar la hora que se muestra en Próximos Juegos)
+        date: new Date().toISOString().slice(0, 16), // formato compatible con datetime-local
         category: 'U19',
         gender: 'Varones',
         home_q1: '', home_q2: '', home_q3: '', home_q4: '',
@@ -33,7 +34,8 @@ export default function Index({ auth, games, clubs, seasons, activeSeasonId }) {
             home_score: game.home_score || 0,
             away_score: game.away_score || 0,
             status: game.status,
-            date: game.date.split('T')[0],
+            // preservar fecha y hora existentes
+            date: new Date(game.date).toISOString().slice(0, 16),
             category: game.category || 'U19',
             gender: game.gender || 'Varones',
             home_q1: game.home_q1 || '',
@@ -60,7 +62,7 @@ export default function Index({ auth, games, clubs, seasons, activeSeasonId }) {
             home_score: 0,
             away_score: 0,
             status: 'scheduled',
-            date: new Date().toISOString().split('T')[0],
+            date: new Date().toISOString().slice(0, 16),
             category: 'U19',
             gender: 'Varones',
             home_q1: '', home_q2: '', home_q3: '', home_q4: '',
@@ -201,8 +203,14 @@ export default function Index({ auth, games, clubs, seasons, activeSeasonId }) {
                                     </div>
                                     
                                     <div className="space-y-2">
-                                        <label className="text-xs font-black text-slate-400 uppercase tracking-widest">FECHA</label>
-                                        <input type="date" className="w-full rounded-2xl border-slate-200 text-sm font-bold p-3" value={data.date} onChange={e => setData('date', e.target.value)} required />
+                                        <label className="text-xs font-black text-slate-400 uppercase tracking-widest">FECHA Y HORA</label>
+                                        <input
+                                            type="datetime-local"
+                                            className="w-full rounded-2xl border-slate-200 text-sm font-bold p-3"
+                                            value={data.date}
+                                            onChange={e => setData('date', e.target.value)}
+                                            required
+                                        />
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-xs font-black text-slate-400 uppercase tracking-widest">CATEGORÍA</label>
